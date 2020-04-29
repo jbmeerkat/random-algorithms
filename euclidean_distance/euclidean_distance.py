@@ -1,40 +1,22 @@
 from math import sqrt
-from functools import reduce
 
 
-class Point:
-    def __init__(self, *coordinates):
-        self.coordinates = coordinates
+def euclidean_distance(vector1, vector2):
+    if len(vector1) != len(vector2):
+        raise ValueError('Vector must be of the same length.')
 
-    def __str__(self):
-        coords = ', '.join(map(str, self.coordinates))
-
-        return f"Point ({coords})"
-
-    def distance_to(self, point):
-        if len(self.coordinates) != len(point.coordinates):
-            raise ValueError('Points must have the same number of dimensions.')
-
-        coords_by_dimension = zip(self.coordinates, point.coordinates)
-        distance = sqrt(
-            sum(
-                map(lambda p: pow((p[0] - p[1]), 2), coords_by_dimension)
-            )
+    distance = sqrt(
+        sum(
+            (v1 - v2) ** 2 for v1, v2 in zip(vector1, vector2)
         )
+    )
 
-        return distance
-
-
-print("One dimensional points:")
-p1 = Point(1)
-p2 = Point(3)
-distance = p1.distance_to(p2)
-print(f"Distance between {p1} and {p2} is {distance}")
+    return distance
 
 
-print("\n")
-print("Multi dimensional points:")
-p1 = Point(1, 2, 3, 4)
-p2 = Point(5, 6, 7, 8)
-distance = p1.distance_to(p2)
-print(f"Distance between {p1} and {p2} is {distance}")
+vector1 = [1, 2, 3, 4]
+vector2 = [5, 6, 7, 8]
+
+distance = euclidean_distance(vector1, vector2)
+
+print(f"Distance between vectors {vector1} and {vector2} is {distance}")
