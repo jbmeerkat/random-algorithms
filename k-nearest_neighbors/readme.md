@@ -17,9 +17,7 @@ neighbors.
 #### [¹] Non-parametric means that method does not rely on any type of distribution AFAIK.
 [¹]:#-note-one
 
-#### [²] Distance can be measured by several different ways. The simplest
-method for continuous variables is Euclidean distance. For discrete
-variables choice depends on specific data.
+#### [²] Distance can be measured by several different ways. The simplest method for continuous variables is Euclidean distance. For discrete variables choice depends on specific data.
 [²]:#-note-one
 
 ## Instructions
