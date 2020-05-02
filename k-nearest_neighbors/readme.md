@@ -6,7 +6,7 @@ It's a non-parametric[¹] method commonly used for classification and
 regression problems.
 
 On input there are __k__ nearest[²] neighbors (or more scientifically
-— training example in the feature space). Output differs depending on
+— training examples in the feature space). Output differs depending on
 a problem type:
 
 - for classification it outputs the most common (mode) class among
