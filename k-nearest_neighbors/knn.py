@@ -1,6 +1,7 @@
 import pandas as pd
 from math import sqrt
 from collections import Counter
+from itertools import chain
 
 
 def load_dataset(file):
@@ -28,6 +29,41 @@ def euclidean_distance(vector1, vector2):
     return distance
 
 
+def split_in_folds(data, folds_number):
+    folds = list()
+    data_size = len(data)
+    fold_size = data_size // folds_number + 1
+
+    for fold_index in range(folds_number):
+        start = fold_index * fold_size
+        end = start + fold_size
+        folds.append(data[start:end])
+
+    return folds
+
+
+def cross_validation_sets(folds):
+    sets = list()
+
+    for fold in folds:
+        test_set = list(fold)
+
+        train_set = list(folds)
+        train_set.remove(fold)
+        train_set = flatten(train_set)
+
+        sets.append((train_set, test_set))
+
+    return sets
+
+
+def cross_validation_split(data, folds_number):
+    folds = split_in_folds(data, folds_number)
+    sets = cross_validation_sets(folds)
+
+    return sets
+
+
 def knn(train, test, k):
     distances = [(row, euclidean_distance(row[1:], test)) for row in train]
     distances.sort(key=lambda distance: distance[1])
@@ -42,6 +78,10 @@ def predict_class(train, test, k):
     prediction = Counter(classes).most_common(1)[0][0]
 
     return prediction
+
+
+def flatten(list_of_lists):
+    return list(chain.from_iterable(list_of_lists))
 
 
 train = load_dataset('cats_dataset.csv')
