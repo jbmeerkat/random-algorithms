@@ -103,12 +103,71 @@ def predict_class(train, test, k):
     return value
 
 
-train_set = load_dataset('cats_dataset.csv')
-test_object = [27, 51, 3.7]
-number_of_neighbors = 20
+def set_predictions(train, test, k):
+    """Calculates predictions for the set of testing object"""
 
+    predictions = list()
+
+    for row in test:
+        test_without_class = deepcopy(row)
+        test_without_class[-1] = None
+
+        predicted_class = predict_class(train, test_without_class, k)
+        predictions.append(predicted_class)
+
+    return predictions
+
+
+def calculate_accuracy(actuals, predictions):
+    """Calculates accuracy from actual values and predicted"""
+
+    counter = 0
+
+    for actual, predicted in zip(actuals, predictions):
+        if actual == predicted:
+            counter += 1
+
+    return counter / len(actuals) * 100
+
+
+def measure_accuracy(dataset, folds_number, neighbors_number):
+    """Evaluate training with crossvalidation to calibrate model params"""
+
+    folds = cross_validation_split(dataset, folds_number)
+    scores = list()
+
+    for (train, test) in folds:
+        predictions = set_predictions(train, test, neighbors_number)
+        actual = [row[-1] for row in test]
+
+        accuracy = calculate_accuracy(actual, predictions)
+
+        scores.append(accuracy)
+
+    return scores
+
+
+def cross_validation_stats(folds, neighbors, scores):
+    """Prints prediction stats"""
+
+    mean = sum(scores) / len(scores)
+
+    print(f"Folds: {folds}, neighbors: {neighbors}")
+    print(f"Scores: {scores}")
+    print(f"Mean accuracy: {mean}")
+    print()
+
+
+FOLDS_NUMBER = 20
+NUMBER_OF_NEIGHBORS = 20
+dataset = load_dataset('cats_dataset.csv')
+
+scores = measure_accuracy(dataset, FOLDS_NUMBER, NUMBER_OF_NEIGHBORS)
+cross_validation_stats(FOLDS_NUMBER, NUMBER_OF_NEIGHBORS, scores)
+
+test_object = [27, 51, 3.7, None]
 print(f"Classifying a cat with height, length and weight {test_object}")
 print()
 
-predicted_class = predict_class(train_set, test_object, number_of_neighbors)
+predicted_class = predict_class(dataset, test_object, NUMBER_OF_NEIGHBORS)
 print(f"Breed prediction for the cat is {predicted_class}")
