@@ -11,7 +11,7 @@ predicted class.
 
 When dependent variable is continuos (__regression tree__) — leaf's value is a
 predicted value. Leaf's value is calculated as a mean of all observations
-ended in that leaf.
+ended in that leaf. This leads to a decreased accuracy.
 
 ## Attribute selection measures (or Metrics as on Wikipedia)
 
