@@ -17,5 +17,5 @@ ended in that leaf. This leads to a decreased accuracy.
 
 To build a decision tree there should be a bunch of criteria on which data will
 be splitted. In general each split should make subsets more homogenous. There
-are couple of algorithms to do that. The most popular is Information Gain and
-Gini.
+are couple of algorithms to do that. The most popular is __Information Gain__ and
+__Gini__.
