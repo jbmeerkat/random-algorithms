@@ -8,10 +8,10 @@ CSV.read(measurements_file, headers: true, converters: :float).flat_map do |cat|
   samples = rand(samples_per_breed)
   samples.times.map do
     [
-      cat['Breed'],
       rand(cat['MinHeight']..cat['MaxHeight']).round(1),
       rand(cat['MinLength']..cat['MaxLength']).round(1),
-      rand(cat['MinWeight']..cat['MaxWeight']).round(1)
+      rand(cat['MinWeight']..cat['MaxWeight']).round(1),
+      cat['Breed']
     ]
   end
 end.shuffle.yield_self do |cats|

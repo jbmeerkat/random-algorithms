@@ -65,7 +65,7 @@ def cross_validation_split(data, folds_number):
 
 
 def knn(train, test, k):
-    distances = [(row, euclidean_distance(row[1:], test)) for row in train]
+    distances = [(row, euclidean_distance(row[:-1], test)) for row in train]
     distances.sort(key=lambda distance: distance[1])
 
     return distances[0:k]
@@ -73,7 +73,7 @@ def knn(train, test, k):
 
 def predict_class(train, test, k):
     neighbors = knn(train, test, k)
-    classes = [neighbor[0][0] for neighbor in neighbors]
+    classes = [neighbor[0][-1] for neighbor in neighbors]
 
     prediction = Counter(classes).most_common(1)[0][0]
 
