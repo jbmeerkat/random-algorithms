@@ -63,6 +63,8 @@ def cross_validation_sets(folds):
 
     for fold in folds:
         test_set = list(fold)
+        for row in test_set:
+            row[-1] = None
 
         train_set = list(folds)
         train_set.remove(fold)
