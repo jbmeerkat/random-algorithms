@@ -98,9 +98,9 @@ def predict_class(train, test, k):
     neighbors = knn(train, test, k)
     classes = [neighbor[0][-1] for neighbor in neighbors]
 
-    prediction = Counter(classes).most_common(1)[0][0]
+    [(value, _times_seen)] = Counter(classes).most_common(1)
 
-    return prediction
+    return value
 
 
 train_set = load_dataset('cats_dataset.csv')
