@@ -86,7 +86,7 @@ def cross_validation_split(data, folds_number):
 def knn(train, test, k):
     """Calcualtes specified number of nearest neighbors"""
 
-    distances = [(row, euclidean_distance(row[:-1], test)) for row in train]
+    distances = [(row, euclidean_distance(row[:-1], test[:-1])) for row in train]
     distances.sort(key=lambda distance: distance[1])
 
     return distances[0:k]
