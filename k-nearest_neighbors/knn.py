@@ -3,6 +3,7 @@
 from math import sqrt
 from collections import Counter
 from itertools import chain
+from copy import deepcopy
 import pandas as pd
 
 
@@ -62,9 +63,7 @@ def cross_validation_sets(folds):
     sets = list()
 
     for fold in folds:
-        test_set = list(fold)
-        for row in test_set:
-            row[-1] = None
+        test_set = deepcopy(fold)
 
         train_set = list(folds)
         train_set.remove(fold)
